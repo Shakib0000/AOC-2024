@@ -13,14 +13,14 @@ public class AOC_2024_Day_One {
         ArrayList<Integer> distances = new ArrayList<Integer>();
 
         for (int i = 0; i < fileData.size(); i++) {
-            Integer firstHalf = Integer.parseInt(fileData.get(i).substring(0, 5));
-            Integer secondHalf = Integer.parseInt(fileData.get(i).substring(8));
+            int firstHalf = Integer.parseInt(fileData.get(i).substring(0, 5));
+            int secondHalf = Integer.parseInt(fileData.get(i).substring(8));
             firstColumnData.add(firstHalf);
             secondColumnData.add(secondHalf);
         }
 
         for (int i = 0; i < firstColumnData.size(); i++) {
-            Integer smallestNumIndex = 0;
+            int smallestNumIndex = 0;
             for (int j = 0; j < firstColumnData.size(); j++) {
                 if (firstColumnData.get(j) < firstColumnData.get(smallestNumIndex)) {
                     smallestNumIndex = j;
@@ -32,7 +32,7 @@ public class AOC_2024_Day_One {
         }
 
         for (int i = 0; i < secondColumnData.size(); i++) {
-            Integer smallestNumIndex = 0;
+            int smallestNumIndex = 0;
             for (int j = 0; j < secondColumnData.size(); j++) {
                 if (secondColumnData.get(j) < secondColumnData.get(smallestNumIndex)) {
                     smallestNumIndex = j;
@@ -43,11 +43,24 @@ public class AOC_2024_Day_One {
             i--;
         }
 
-        Integer total = 0;
+        int total = 0;
         for (int i = 0; i < sortedFirstColumnData.size(); i++) {
             total += Math.abs(sortedFirstColumnData.get(i) - sortedSecondColumnData.get(i));
         }
-        System.out.println(total);
+        System.out.println("The total distance is " + total);
+
+        int similarityScore = 0;
+        for (int i = 0; i < sortedFirstColumnData.size(); i++) {
+            int count = 0;
+            for (int j = 0; j < sortedSecondColumnData.size(); j++) {
+                if (sortedSecondColumnData.get(j).equals(sortedFirstColumnData.get(i))) {
+                    count++;
+                }
+            }
+            similarityScore += count*sortedFirstColumnData.get(i);
+        }
+
+        System.out.println("The similarity score is " + similarityScore);
     }
 
     public static ArrayList<String> getFileData(String fileName) {
