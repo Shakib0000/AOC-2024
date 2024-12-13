@@ -13,10 +13,11 @@ public class AOC_2024_Day_Six {
         int moveCount = 0;
         boolean onMap = true;
         while (onMap) {
+            String mapDiagram = "";
             for (int i = 0; i < map.length; i++) {
                 for (int j = 0; j < map[0].length; j++) {
                     if (map[i][j].equals("v")) {
-                        if (i + 1 < map.length && map[i + 1][j].equals(".")) {
+                        if (i + 1 < map.length && (map[i + 1][j].equals(".") || map[i + 1][j].equals("X"))) {
                             map[i + 1][j] = "v";
                             map[i][j] = "X";
                             moveCount++;
@@ -29,7 +30,7 @@ public class AOC_2024_Day_Six {
                         }
                     }
                     if (map[i][j].equals(">")) {
-                        if (j + 1 < map[0].length && map[i][j + 1].equals(".")) {
+                        if (j + 1 < map[0].length && (map[i][j + 1].equals(".") || map[i][j + 1].equals("X"))) {
                             map[i][j + 1] = ">";
                             map[i][j] = "X";
                             moveCount++;
@@ -42,7 +43,7 @@ public class AOC_2024_Day_Six {
                         }
                     }
                     if (map[i][j].equals("^")) {
-                        if (i - 1 >= 0 && map[i - 1][j].equals(".")) {
+                        if (i - 1 >= 0 && (map[i - 1][j].equals(".") || map[i - 1][j].equals("X"))) {
                             map[i - 1][j] = "^";
                             map[i][j] = "X";
                             moveCount++;
@@ -55,7 +56,7 @@ public class AOC_2024_Day_Six {
                         }
                     }
                     if (map[i][j].equals("<")) {
-                        if (j - 1 >= 0 && map[i][j - 1].equals(".")) {
+                        if (j - 1 >= 0 && (map[i][j - 1].equals(".") || map[i][j - 1].equals("X"))) {
                             map[i][j - 1] = "<";
                             map[i][j] = "X";
                             moveCount++;
@@ -67,10 +68,13 @@ public class AOC_2024_Day_Six {
                             onMap = false;
                         }
                     }
+                    mapDiagram+=map[i][j];
                 }
+                mapDiagram+="\n";
             }
-            System.out.println(moveCount);
+            System.out.println(mapDiagram);
         }
+        System.out.println(moveCount);
     }
 
     public static ArrayList<String> getFileData(String fileName) {
