@@ -34,18 +34,56 @@ public class AOC_2024_Day_Fourteen {
 
         for (int i = 0; i < 100; i++) {
             for (int j = 0; j < positionHorizontal.length; j++) {
-                int horizontalPosition = positionHorizontal[i];
-                int verticalPosition = positionVertical[i];
-                int horizontalVelocity = velocityHorizontal[i];
-                int verticalVelocity = velocityVertical[i];
-                map[horizontalPosition][verticalPosition]--;
-                if (horizontalPosition + horizontalVelocity >= map.length) {
-
+                int horizontalPosition = positionHorizontal[j];
+                int verticalPosition = positionVertical[j];
+                int horizontalVelocity = velocityHorizontal[j];
+                int verticalVelocity = velocityVertical[j];
+                if (map[horizontalPosition][verticalPosition] > 0) {
+                    map[horizontalPosition][verticalPosition]--;
                 }
+                int horizontalMovement = horizontalPosition + horizontalVelocity;
+                int verticalMovement = verticalPosition + verticalVelocity;
+                if (horizontalMovement >= map.length) {
+                    horizontalMovement = horizontalMovement - map.length;
+                }
+                else if (horizontalMovement < 0) {
+                    horizontalMovement = map.length + horizontalMovement;
+                }
+                if (verticalMovement >= map[0].length) {
+                    verticalMovement = verticalMovement - map[0].length;
+                }
+                else if (verticalMovement < 0) {
+                    verticalMovement = map[0].length + verticalMovement;
+                }
+               map[horizontalMovement][verticalMovement]++;
             }
         }
 
-        System.out.println(Arrays.deepToString(map));
+        int firstQuadrantTotal = 0;
+        int secondQuadrantTotal = 0;
+        int thirdQuadrantTotal = 0;
+        int fourthQuadrantTotal = 0;
+        for (int i = 0; i < map.length / 2; i++) {
+            for (int j = 0; j < map[0].length / 2; j++) {
+                firstQuadrantTotal += map[i][j];
+            }
+        }
+        for (int i = map.length / 2; i < map.length; i++) {
+            for (int j = map[0].length / 2; j < map[0].length; j++) {
+                secondQuadrantTotal += map[i][j];
+            }
+        }
+        for (int i = 0; i < map.length / 2; i++) {
+            for (int j = 0; j < map[0].length / 2; j++) {
+                thirdQuadrantTotal += map[i][j];
+            }
+        }
+        for (int i = map.length / 2; i < map.length; i++) {
+            for (int j = map[0].length / 2; j < map[0].length; j++) {
+                fourthQuadrantTotal += map[i][j];
+            }
+        }
+        System.out.println("Safety factor: " + firstQuadrantTotal * secondQuadrantTotal * thirdQuadrantTotal * fourthQuadrantTotal);
     }
 
     public static ArrayList<String> getFileData(String fileName) {
